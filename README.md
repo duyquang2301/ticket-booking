@@ -15,6 +15,7 @@ The application consists of three main microservices:
 - **Backend**: NestJS, TypeScript
 - **Database**: MongoDB
 - **Caching**: Redis
+- **Queue**: RabbitMQ
 - **Containerization**: Docker, Docker Compose
 - **Load Testing**: k6
 
@@ -113,12 +114,14 @@ cp .env.example .env
 ### Concert Service
 - `PORT` - Service port (default: 3001)
 - `MONGO_URI` - MongoDB connection string
+- `QUEUE_URL` - RabbitMQ connection string
 
 ### Booking Service
 - `PORT` - Service port (default: 3002)
 - `MONGO_URI` - MongoDB connection string
 - `REDIS_URL` - Redis connection string
 - `JWT_SECRET` - Secret for JWT tokens
+- `QUEUE_URL` - RabbitMQ connection string
 
 ## License
 
