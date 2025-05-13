@@ -74,7 +74,6 @@ Each service can be run independently for development:
 
 - GET `/concerts` - Get all concerts
 - GET `/concerts/:id` - Get concert details by ID
-- PATCH `/concerts/seat-types/:id` - Update seat type information
 
 ### Booking Service
 
@@ -84,9 +83,6 @@ Each service can be run independently for development:
 ## Load Testing
 
 The project includes a load testing suite using k6. The test simulates multiple users:
-1. Logging in
-2. Viewing concert details
-3. Booking tickets
 
 To run the load test:
 
@@ -122,9 +118,3 @@ cp .env.example .env
 - `REDIS_URL` - Redis connection string
 - `JWT_SECRET` - Secret for JWT tokens
 - `QUEUE_URL` - RabbitMQ connection string
-
-## License
-
-MIT
-
----
