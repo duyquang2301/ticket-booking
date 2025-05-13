@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "e87f8c90-acbf-40b5-8e23-695a813ecc5d",
+		"name": "Concert",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26185685",
+		"_collection_link": "https://winter-desert-123603.postman.co/workspace/My-Workspace~76c4b3ab-ee86-4a7e-84ee-4317e996fb34/collection/26185685-e87f8c90-acbf-40b5-8e23-695a813ecc5d?action=share&source=collection_link&creator=26185685"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZNZTVqTTBWSkJBX1R3eXBkRUIxZyJ9.eyJzY3Rfcm9sZXMiOlsiQWRtaW5pc3RyYXRvciJdLCJuaWNrbmFtZSI6ImR1Yy5uZ3V5ZW4rMSIsIm5hbWUiOiJkdWMubmd1eWVuKzFAc3VwcmVtZXRlY2gudm4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvZWYzZmMxOTIwNTg4NzFiZWNlMTE1OGIwN2I5MTU4ZTk_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZkdS5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNC0wOS0wNFQwOTo0ODowMi41NTVaIiwiZW1haWwiOiJkdWMubmd1eWVuKzFAc3VwcmVtZXRlY2gudm4iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9kZXYtZWpuamZlbTFpeWt1bDcyNC51cy5hdXRoMC5jb20vIiwiYXVkIjoiV2RpTUNLcmt5UE1Td1IzYnZaR2RQNlBnVjFHT21jN1kiLCJpYXQiOjE3MjU1ODc4NTIsImV4cCI6MTcyNTYyMzg1Miwic3ViIjoiYXV0aDB8NjZkN2QzYjgxYzMwM2Y4N2RiMjQxZDEzIiwic2lkIjoiVmRuVFFWOTc2aS1OU0pIckMtU05VUnNNRlBINkwyblIiLCJub25jZSI6IlRUaFNVemN0Vm5OVWFVUnVUVll1WlZndVlqTk1ObmhyWkVoSmVUSTNWMGg2TlZOdlJFRlJVVlJhY1E9PSJ9.Y8nbTmLuVC_GN6Egt89hnwOh2VHUeTYtkW37TIA1UvYjc4RS3O4s7MDS1IqEwumWsfu4mbTeONS82O4lp5Z4NJrDGObC5vxJKh8Kd7_cEPTJ0kgOCyojmx-tIee6pWO-OxHpYPhqKiHy2_9GWttO3rk6G-dw6D5u_C_DZMKAFN3I0XlezoCEsJu0crCU3NUwLx9xZQ-D-8DDUmqDCz6TzuFYTgETGIy0x2XZSZo0Jk5P17-Te-4qwoc6RjGwIkh_ItI0Cw-mVKJJePuvVbrnEtVBYMUiv6a5w_cVOTEcYxDK1gsUQ7jX6b3XF21QNhADTUMQLGBumoHu77JxAp32xA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-sct-api-key",
+						"value": "3L59os9mAKoeOwoXXZDuGA8KdtRDXUdM"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"duyquang\",\n    \"email\": \"duyquang1@gmail.com\",\n    \"password\": \"11223344\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.dev.sct-dive.com/sct/messages/push' \\\n--header 'x-sct-api-key: 3L59os9mAKoeOwoXXZDuGA8KdtRDXUdM' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"from\": \"no.duong@supremetech.vn\",\n    \"to\": \"U25646ad8d784e1babbe36b9c765bf97c\",\n    \"chatType\": \"DIRECT\",\n    \"messages\": [\n        {\n            \"messageType\": \"IMAGE\",\n            \"originalContentUrl\": \"https://img.freepik.com/free-photo/beautiful-landscape_1417-1582.jpg?t=st=1714116653~exp=1714120253~hmac=c3814cfe1e0a6dc4141b127895ef2200ab555b5001064b9396a8ce82b09e16aa\",\n            \"previewImageUrl\": \"https://img.freepik.com/free-photo/beautiful-landscape_1417-1582.jpg?t=st=1714116653~exp=1714120253~hmac=c3814cfe1e0a6dc4141b127895ef2200ab555b5001064b9396a8ce82b09e16aa\"\n        }\n    ]\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-sct-api-key",
+						"value": "3L59os9mAKoeOwoXXZDuGA8KdtRDXUdM"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"duyquang@gmail.com\",\n    \"password\": \"11223344\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.dev.sct-dive.com/sct/messages/push' \\\n--header 'x-sct-api-key: 3L59os9mAKoeOwoXXZDuGA8KdtRDXUdM' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"from\": \"no.duong@supremetech.vn\",\n    \"to\": \"U25646ad8d784e1babbe36b9c765bf97c\",\n    \"chatType\": \"DIRECT\",\n    \"messages\": [\n        {\n            \"messageType\": \"IMAGE\",\n            \"originalContentUrl\": \"https://img.freepik.com/free-photo/beautiful-landscape_1417-1582.jpg?t=st=1714116653~exp=1714120253~hmac=c3814cfe1e0a6dc4141b127895ef2200ab555b5001064b9396a8ce82b09e16aa\",\n            \"previewImageUrl\": \"https://img.freepik.com/free-photo/beautiful-landscape_1417-1582.jpg?t=st=1714116653~exp=1714120253~hmac=c3814cfe1e0a6dc4141b127895ef2200ab555b5001064b9396a8ce82b09e16aa\"\n        }\n    ]\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get concert",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODFmMDk1NTZlZTRkMWMyMjk4NjhmZTEiLCJ1c2VybmFtZSI6ImR1eXF1YW5nIiwiaWF0IjoxNzQ3MDIyMzgzLCJleHAiOjE3NDcwMjU5ODN9.Rb0LlTiG_2TGySN6opJhYxyPVLdOyNAJ61GXaCPGPJ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Taylor Swift Concertt\",\r\n    \"description\": \"The Eras Tour 2024\",\r\n    \"venue\": \"National Stadium\",\r\n    \"date\": \"2026-12-25T19:00:00.000Z\",\r\n    \"seatTypes\": [\r\n        {\r\n            \"name\": \"VIP\",\r\n            \"price\": 1000,\r\n            \"totalSeats\": 100\r\n        },\r\n        {\r\n            \"name\": \"Regular\",\r\n            \"price\": 500,\r\n            \"totalSeats\": 500\r\n        },\r\n        {\r\n            \"name\": \"Standing\",\r\n            \"price\": 200,\r\n            \"totalSeats\": 1000\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/concerts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"concerts"
+					],
+					"query": [
+						{
+							"key": "activeOnly",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get concert detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODFmMDk1NTZlZTRkMWMyMjk4NjhmZTEiLCJ1c2VybmFtZSI6ImR1eXF1YW5nIiwiaWF0IjoxNzQ3MDIyMzgzLCJleHAiOjE3NDcwMjU5ODN9.Rb0LlTiG_2TGySN6opJhYxyPVLdOyNAJ61GXaCPGPJ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Taylor Swift Concertt\",\r\n    \"description\": \"The Eras Tour 2024\",\r\n    \"venue\": \"National Stadium\",\r\n    \"date\": \"2026-12-25T19:00:00.000Z\",\r\n    \"seatTypes\": [\r\n        {\r\n            \"name\": \"VIP\",\r\n            \"price\": 1000,\r\n            \"totalSeats\": 100\r\n        },\r\n        {\r\n            \"name\": \"Regular\",\r\n            \"price\": 500,\r\n            \"totalSeats\": 500\r\n        },\r\n        {\r\n            \"name\": \"Standing\",\r\n            \"price\": 200,\r\n            \"totalSeats\": 1000\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/concerts/68221cd039fda0f7f23c5621",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"concerts",
+						"68221cd039fda0f7f23c5621"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "booking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODIyMTQwZDFkMjJjMTU2ZDc4MTJjYWUiLCJlbWFpbCI6ImR1eXF1YW5nQGdtYWlsLmNvbSIsImlhdCI6MTc0NzEyNDE2NywiZXhwIjoxNzQ3MTI3NzY3fQ.F3GFUzU-Ds3u9P8QHvTTj3VpOui-C8O1T42POSMYbcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGU3YTdjNWE5ZDRmZjA1MDRmYmE0ZSIsImVtYWlsIjoiam9obmQ5b2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjkwMDUwOTgsImV4cCI6MTcyOTAwODY5OH0.88PNZ682VR-LY3HvB7wLbuKp02v0RfOaSLzFS_157tE"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"concertId\": \"6822b94cecc73732cd9be69c\",\r\n    \"seatTypeId\": \"6822b931ecc73732cd9be69a\",\r\n    \"quantity\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODIyMTQwZDFkMjJjMTU2ZDc4MTJjYWUiLCJlbWFpbCI6ImR1eXF1YW5nQGdtYWlsLmNvbSIsImlhdCI6MTc0NzEyNDE2NywiZXhwIjoxNzQ3MTI3NzY3fQ.F3GFUzU-Ds3u9P8QHvTTj3VpOui-C8O1T42POSMYbcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGU3YTdjNWE5ZDRmZjA1MDRmYmE0ZSIsImVtYWlsIjoiam9obmQ5b2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjkwMDUwOTgsImV4cCI6MTcyOTAwODY5OH0.88PNZ682VR-LY3HvB7wLbuKp02v0RfOaSLzFS_157tE"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/bookings/6822ffd0cd7cb26aa4fcd234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"bookings",
+						"6822ffd0cd7cb26aa4fcd234"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

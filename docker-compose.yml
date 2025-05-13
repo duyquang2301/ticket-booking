@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./auth-service:/app
+      - /app/node_modules
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/auth_db
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your_jwt_secret
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - app-network
+
+  concert-service:
+    build:
+      context: ./concert-service
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./concert-service:/app
+      - /app/node_modules
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/concert_db
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  booking-service:
+    build:
+      context: ./booking-service
+      dockerfile: Dockerfile
+    ports:
+      - '3002:3002'
+    volumes:
+      - ./booking-service:/app
+      - /app/node_modules
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/booking_db
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your_jwt_secret
+    depends_on:
+      - mongodb
+      - redis
+      - concert-service
+      - rabbitmq
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - app-network
+
+  # k6:
+  #   image: grafana/k6:latest
+  #   volumes:
+  #     - ./load-test:/scripts
+  #   command: run /scripts/load-test.js
+  #   environment:
+  #     - K6_OUT=json=/scripts/results.json
+  #   depends_on:
+  #     - auth-service
+  #     - concert-service
+  #     - booking-service
+  #     - rabbitmq
+  #   networks:
+  #     - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
