@@ -1,6 +1,6 @@
 # Ticket Booking System
 
-A microservices-based ticket booking system for concerts built with NestJS, MongoDB, and Redis.
+A microservices-based ticket booking system for concerts built with NestJS, MongoDB, Redis and RabbitMQ.
 
 ## System Architecture
 
@@ -43,25 +43,6 @@ The application consists of three main microservices:
    - Auth Service: http://localhost:3000
    - Concert Service: http://localhost:3001
    - Booking Service: http://localhost:3002
-
-### Local Development
-
-Each service can be run independently for development:
-
-1. Navigate to a service directory:
-   ```bash
-   cd auth-service
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the service in development mode:
-   ```bash
-   npm run start:dev
-   ```
 
 ## API Endpoints
 
