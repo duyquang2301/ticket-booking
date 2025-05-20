@@ -1,56 +1,81 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import * as amqp from 'amqplib';
 
+type MessageHandler = (seatTypeId: string, remainingTickets: number) => Promise<void>;
+
 @Injectable()
-export class RabbitMQConsumer implements OnModuleInit {
-    private rabbitmqConnection: amqp.Connection;
-    private rabbitmqChannel: amqp.Channel;
-    private readonly rabbitmqUrl = process.env.QUEUE_URL || 'amqp://guest:guest@rabbitmq:5672';
-    private messageHandler: (seatTypeId: string, remainingTickets: number) => Promise<void>;
+export class RabbitMQConsumer implements OnModuleInit, OnModuleDestroy {
+  private connection: amqp.Connection;
+  private channel: amqp.Channel;
+  private readonly logger = new Logger(RabbitMQConsumer.name);
+  private readonly queueUrl = process.env.QUEUE_URL || 'amqp://guest:guest@rabbitmq:5672';
+  private readonly exchange = 'seatType_exchange';
+  private readonly queue = 'seatTypeUpdates';
+  private readonly routingKey = '';
+  private messageHandler: MessageHandler;
 
-    constructor() { }
+  async onModuleInit(): Promise<void> {
+    await this.connect();
+  }
 
-    async onModuleInit() {
-        await this.initRabbitMQ();
+  async onModuleDestroy(): Promise<void> {
+    await this.close();
+  }
+
+  private async connect(): Promise<void> {
+    try {
+      this.connection = await amqp.connect(this.queueUrl);
+      this.channel = await this.connection.createChannel();
+
+      await this.channel.assertExchange(this.exchange, 'fanout', { durable: true });
+      await this.channel.assertQueue(this.queue, { durable: true });
+      await this.channel.bindQueue(this.queue, this.exchange, this.routingKey);
+
+      this.logger.log('✅ RabbitMQ consumer connected and ready.');
+    } catch (error) {
+      this.logger.error('❌ Failed to initialize RabbitMQ consumer', error.stack);
+      throw new Error('RabbitMQ consumer initialization failed');
+    }
+  }
+
+  public registerHandler(handler: MessageHandler): void {
+    this.messageHandler = handler;
+    this.consumeMessages();
+  }
+
+  private async consumeMessages(): Promise<void> {
+    if (!this.channel) {
+      this.logger.warn('RabbitMQ channel is not initialized. Cannot consume messages.');
+      return;
     }
 
-    private async initRabbitMQ() {
+    await this.channel.consume(
+      this.queue,
+      async (msg) => {
+        if (!msg) return;
+
         try {
-            this.rabbitmqConnection = await amqp.connect(this.rabbitmqUrl);
-            this.rabbitmqChannel = await this.rabbitmqConnection.createChannel();
-            await this.rabbitmqChannel.assertExchange('seatType_exchange', 'fanout', { durable: true });
-            await this.rabbitmqChannel.assertQueue('seatTypeUpdates', { durable: true });
-            await this.rabbitmqChannel.bindQueue('seatTypeUpdates', 'seatType_exchange', '');
+          const { seatTypeId, remainingTickets } = JSON.parse(msg.content.toString());
+          await this.messageHandler?.(seatTypeId, remainingTickets);
+          this.channel.ack(msg);
 
-            console.log('RabbitMQ consumer initialized successfully');
-        } catch (error) {
-            console.error('Failed to initialize RabbitMQ consumer:', error.message);
-            throw new Error('RabbitMQ consumer initialization failed');
+          this.logger.debug(`📥 Consumed message: seatTypeId=${seatTypeId}, remainingTickets=${remainingTickets}`);
+        } catch (err) {
+          this.logger.error('❌ Failed to process message', err.stack);
+          // Optional: move to dead-letter queue
         }
-    }
+      },
+      { noAck: false },
+    );
+  }
 
-    setMessageHandler(handler: (seatTypeId: string, remainingTickets: number) => Promise<void>) {
-        this.messageHandler = handler;
-        this.startConsuming();
+  private async close(): Promise<void> {
+    try {
+      await this.channel?.close();
+      await this.connection?.close();
+      this.logger.log('🛑 RabbitMQ consumer closed.');
+    } catch (err) {
+      this.logger.warn('Error while closing RabbitMQ consumer:', err.message);
     }
-
-    private async startConsuming() {
-        this.rabbitmqChannel.consume('seatTypeUpdates', async (msg) => {
-            if (msg) {
-                try {
-                    const { seatTypeId, remainingTickets } = JSON.parse(msg.content.toString());
-                    await this.messageHandler(seatTypeId, remainingTickets);
-                    this.rabbitmqChannel.ack(msg);
-                    console.log(`Processed seatType update: ${seatTypeId} with remainingTickets: ${remainingTickets}`);
-                } catch (error) {
-                    console.error('Error processing RabbitMQ message:', error.message);
-                }
-            }
-        }, { noAck: false });
-    }
-
-    async close() {
-        await this.rabbitmqChannel.close();
-        await this.rabbitmqConnection.close();
-    }
+  }
 }

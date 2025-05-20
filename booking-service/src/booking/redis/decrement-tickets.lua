@@ -1,35 +1,32 @@
--- KEYS[1]: seatTypeId (the Redis key storing remainingTickets)
--- ARGV[1]: quantity (the number of tickets the user wants to book)
+-- KEYS[1]: seatTypeId (Redis key storing remainingTickets)
+-- ARGV[1]: quantity (number of tickets to book)
 
-local seatTypeId = KEYS[1]
-local quantity = tonumber(ARGV[1]) 
+local key = KEYS[1]
+local quantity = tonumber(ARGV[1])
 
--- Check if the quantity is valid (quantity should be greater than 0 and not nil)
-if quantity == nil or quantity <= 0 then
-  return -2 -- Error: invalid quantity
+-- Validate quantity
+if not quantity or quantity <= 0 then
+  return -2 -- Invalid quantity
 end
 
--- Retrieve the remaining tickets from Redis
-local remainingTickets = redis.call('GET', seatTypeId)
-
--- Check if the key (seatTypeId) does not exist in Redis
-if remainingTickets == false then
-  return -3 -- Error: key does not exist
+-- Get current remaining tickets
+local remaining = tonumber(redis.call('GET', key))
+if not remaining then
+  return -3 -- Key does not exist
 end
 
--- Convert the remaining tickets to a number
-remainingTickets = tonumber(remainingTickets)
-
--- Check if there are enough tickets available
-if remainingTickets >= quantity then
-  local newRemainingTickets = redis.call('DECRBY', seatTypeId, quantity)
-
-  if newRemainingTickets < 0 then
-    redis.call('INCRBY', seatTypeId, quantity) -- rollback 
-    return -4 -- Error: negative value after decrement
-  end
-
-  return newRemainingTickets -- Success: return the remaining tickets
-else
-  return -1 -- Error: not enough tickets
+-- Check availability
+if remaining < quantity then
+  return -1 -- Not enough tickets
 end
+
+-- Attempt to decrement
+local newRemaining = redis.call('DECRBY', key, quantity)
+
+-- Sanity check rollback (should never happen if logic is correct)
+if newRemaining < 0 then
+  redis.call('INCRBY', key, quantity) -- rollback
+  return -4 -- Negative value after decrement
+end
+
+return newRemaining -- Success
